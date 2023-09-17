@@ -4,41 +4,42 @@ import csv
 import pre_proc_depth_id as pre
 
 
-#
+# binning by brute force
 # csv structure
 # csv_header = ['date', 'lat', 'long', 'Depthm', 'T_degC', 'Salnty']
 
-
-def date_bin(proc_file):
-    from datetime import datetime
-    # pre-set a date for testing
-    date_old = '1900-01'
-    #
-
-    data_list = []
+def open_csv(proc_file):
     # data = pre.data_to_proc(proc_file, proc_fields)
     # this is the consolidated csv just read each line
     data_b = os.path.join(os.getcwd(), "input", proc_file)
-    data_main = pd.read_csv(data_b)
+    return pd.read_csv(data_b)
 
-    for i, row in data_main.head(2000).iterrows():
+
+def date_bin(data_main):
+    # builds files based on year
+
+    # pre-set a date for testing
+    date_old = '1900'
+
+    for i, row in data_main.iterrows():
         date_new = row['date']
-        dt_obj1 = datetime.strptime(date_old, "%Y-%m")
-        dt_obj2 = datetime.strptime(date_new, "%Y-%m")
+        date_string = date_new.split("-")
 
         # shifts date from old to new
-        if dt_obj1 < dt_obj2:
-            date_old = date_new
-            date_csv = os.path.join(os.getcwd(), "output", date_new + '.csv')
-            print(date_csv)
+        # 1900 < 1949
+        if date_old < date_string[0]:
+            date_old = date_string[0]
+            date_csv = os.path.join(os.getcwd(), "output", date_string[0] + '.csv')
             writer, fh = pre.cvs_builder(date_csv)
+
+        data_list = [row['date'], row['lat'], row['long'], row['Depthm'], row['T_degC'], row['Salnty']]
+        writer.writerow(data_list)
 
     fh.close()
 
 
-def salinity_bin():
-    print("blah")
 
 
-#fields = ['date', 'lat', 'long', 'Depthm', 'T_degC', 'Salnty']
-date_bin("data_everything.csv")
+# fields = ['date', 'lat', 'long', 'Depthm', 'T_degC', 'Salnty']
+csv_data_new = open_csv("data_everything.csv")
+date_bin(csv_data_new)

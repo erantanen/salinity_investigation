@@ -71,7 +71,6 @@ def convert_pos(row_data):
 
 
 # structure of data_list
-# ['date', 'lat', 'long', 'Depthm', 'T_degC', 'Salnty']
 fields_old = ['Sta_ID', 'Depth_ID', 'Depthm', 'T_degC', 'Salnty']
 proc_file = "bottle.csv"
 new_csv = 'data_everything'
