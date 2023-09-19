@@ -38,8 +38,17 @@ def date_bin(data_main):
     fh.close()
 
 
+def panda_bin_gen(data_frame, depth_1, depth_2, inspect_date):
+    # hard-coding nulls quick and dirty
+
+    cond_1 = data_frame.Depthm.between(depth_1, depth_2)
+    cond_2 = data_frame.date.str.startswith(inspect_date)
+    cond_3 = (data_frame.Salnty.notnull() & data_frame.T_degC.notnull())
+    result = data_frame.loc[cond_1 & cond_2 & cond_3]
+
+    return result
 
 
 # fields = ['date', 'lat', 'long', 'Depthm', 'T_degC', 'Salnty']
-csv_data_new = open_csv("data_everything.csv")
-date_bin(csv_data_new)
+#csv_data_new = open_csv("data_everything.csv")
+# date_bin(csv_data_new)
