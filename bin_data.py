@@ -49,7 +49,7 @@ def panda_bin_gen(data_frame, depth_1, depth_2, inspect_date):
     return result
 
 
-def mean_total_year(data_main, target, d1, d2):
+def grouping_total_year(data_main, target, d1, d2):
 
     # builds a dictionary of lists - year
 
@@ -67,8 +67,8 @@ def mean_total_year(data_main, target, d1, d2):
     new_dic = dict()
     new_list = []
 
-    # for i, row in result_inside.iterrows():
-    for i, row in result_inside.head(1000).iterrows():
+    for i, row in result_inside.iterrows():
+    #for i, row in result_inside.head(1000).iterrows():
 
         date_new = row['date']
         date_string = date_new.split("-")
@@ -78,11 +78,12 @@ def mean_total_year(data_main, target, d1, d2):
         # sets new dictionary key
         if date_old < date_string[0]:
             date_old = date_string[0]
+            new_list = list()
             new_list.append(row[target])
-            new_dic["lst_" + str(date_old)] = new_list
+            new_dic[str(date_old)] = new_list
         else:
             new_list.append(row[target])
-            new_dic["lst_" + str(date_old)] = new_list
+            new_dic[str(date_old)] = new_list
 
     return new_dic
 
