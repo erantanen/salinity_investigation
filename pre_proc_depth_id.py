@@ -57,7 +57,9 @@ def date_builder(row_data_string):
     date_year = string_list[0] + string_list[1][0:2]
     # cat of year and month with dash 1949-09
     # it works - not pretty
-    date_month: object = string_list[1][3:4]
+    # print(string_list[1][2:4])
+    date_month: object = string_list[1][2:4]
+    # print(date_month)
     date_with_month = date_year + "-" + date_month
     return date_with_month
 
@@ -77,11 +79,11 @@ new_csv = 'data_everything'
 
 data_list = []
 
-#data_b = os.path.join(os.getcwd(), "input", proc_file)
+# data_b = os.path.join(os.getcwd(), "input", proc_file)
 data = data_to_proc(proc_file, fields_old)
 
 # for everything putting this into input for later use
-new_csv = os.path.join(os.getcwd(), "input", new_csv +'.csv')
+new_csv = os.path.join(os.getcwd(), "input", new_csv + '.csv')
 writer, fh_new = cvs_builder(new_csv)
 
 #
@@ -89,8 +91,7 @@ writer, fh_new = cvs_builder(new_csv)
 #
 
 for i, row in data.iterrows():
-#for i, row in data.head(100).iterrows():
-
+# for i, row in data.head(1000).iterrows():
     # if for date?
 
     lat_c, long_c = convert_pos(row)
@@ -98,4 +99,3 @@ for i, row in data.iterrows():
     writer.writerow(data_list)
 
 fh_new.close()
-

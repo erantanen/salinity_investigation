@@ -49,6 +49,43 @@ def panda_bin_gen(data_frame, depth_1, depth_2, inspect_date):
     return result
 
 
+def mean_total_year(data_main, target, d1, d2):
+
+    # builds a dictionary of lists - year
+
+    # data cleaning of incoming dataframe
+    df_group = data_main
+    # depth banding
+    depth_1 = d1
+    depth_2 = d2
+    cond_1 = df_group.Depthm.between(depth_1, depth_2)
+    cond_3 = (df_group.Salnty.notnull() & df_group.T_degC.notnull())
+    result_inside = df_group.loc[cond_1 & cond_3]
+
+    # pre-set a date for testing
+    date_old = '1900'
+    new_dic = dict()
+    new_list = []
+
+    # for i, row in result_inside.iterrows():
+    for i, row in result_inside.head(1000).iterrows():
+
+        date_new = row['date']
+        date_string = date_new.split("-")
+
+        # shifts date from old to new
+        # 1900 < 1949
+        # sets new dictionary key
+        if date_old < date_string[0]:
+            date_old = date_string[0]
+            new_list.append(row[target])
+            new_dic["lst_" + str(date_old)] = new_list
+        else:
+            new_list.append(row[target])
+            new_dic["lst_" + str(date_old)] = new_list
+
+    return new_dic
+
 # fields = ['date', 'lat', 'long', 'Depthm', 'T_degC', 'Salnty']
 #csv_data_new = open_csv("data_everything.csv")
 # date_bin(csv_data_new)
