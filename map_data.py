@@ -40,3 +40,9 @@ def dots_on_a_map(df, target_inspection, year, depth):
     # saving map as png, has issues with zoom
     fn = target_inspection + '_ ' + year + '_ ' + str(depth) + '.html'
     cali_map.save(fn)
+
+
+# example call
+#
+
+dots_on_a_map(result_50_100, 'Salnty','1949',depth_2)

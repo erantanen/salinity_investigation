@@ -163,9 +163,10 @@ cython_debug/
 
 
 # program specific folders
-
 input/
 output/
 
+# specific file to ignore
+scratch_temp.py
 # *.html
 

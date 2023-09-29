@@ -47,4 +47,4 @@ and a non-trend with time series data.
 ## The Idea
 The bottle data is positional data in more than one sense, it has lat/long but also
 depth so we have x/y and z as well as time series\
-![image](direction-of-x-y-and-z-axis.jpg)
+![image](images/direction-of-x-y-and-z-axis.jpg)
